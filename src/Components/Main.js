@@ -10,6 +10,8 @@ import Signup from "./Pages/Signup"
 import Cart from "./Pages/Cart"
 import Home from "./Pages/Home"
 import Dashboard from "./Pages/Dashboard"
+import Footer from './Footer'
+import Item from './Pages/Item'
 
 export default function Main() {
   return (
@@ -24,8 +26,10 @@ export default function Main() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/cart' element={<Cart/>}/>
+            <Route path='/item' element={<Item/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
         </Routes>
+        <Footer style={{marginTop:"25rem"}}/>
     </Router>
     
   )
