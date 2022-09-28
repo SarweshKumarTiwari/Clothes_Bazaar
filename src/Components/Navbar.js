@@ -1,19 +1,38 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import pic from "./images/cb.png";
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation,useNavigate} from "react-router-dom"
+import { authorise } from './functions';
 
 export default function Navbar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate=useNavigate();
 
   //This 'isAuth' variable is used to check if User is Authorised 
-  const [isAuth] = useState(true);
+  const [isAuth,setisAuth] = useState(false);
+  const [toggle, settoggle] = useState(false);
 
   const loc = useLocation();
-  useEffect(()=>{
+  useEffect(() => {
     setIsMenuOpen(false);
-  },[loc.pathname])
-  
+  }, [loc.pathname])
+
+  useEffect(()=>{
+    authorise().then(x=>{
+      if (x) {
+        setisAuth(true);
+      }
+      else{
+        setisAuth(false);
+      }
+    })
+  });
+
+  const logout=()=>{
+    localStorage.removeItem("AuthToken");
+    navigate("/")
+  }
+
   return (
     <div className="bg-gray-900">
       <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -24,7 +43,7 @@ export default function Navbar() {
                 to="/men"
                 aria-label="Our product"
                 title="Our product"
-                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/men' ? "underline decoration-wavy" : ""}`}
+                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/men' ? "underline underline-offset-8" : ""}`}
               >
                 Men
               </Link>
@@ -34,7 +53,7 @@ export default function Navbar() {
                 to="/women"
                 aria-label="Our product"
                 title="Our product"
-                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/women' ? "underline decoration-wavy" : ""}`}
+                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/women' ? "underline underline-offset-8" : ""}`}
               >
                 Women
               </Link>
@@ -44,7 +63,7 @@ export default function Navbar() {
                 to="/kids"
                 aria-label="Product pricing"
                 title="Product pricing"
-                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/kids' ? "underline decoration-wavy" : ""}`}
+                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/kids' ? "underline underline-offset-8" : ""}`}
               >
                 Kids
               </Link>
@@ -54,7 +73,7 @@ export default function Navbar() {
                 to="/more"
                 aria-label="Product pricing"
                 title="Product pricing"
-                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/more' ? "underline decoration-wavy" : ""}`}
+                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/more' ? "underline underline-offset-8" : ""}`}
               >
                 More..
               </Link>
@@ -77,7 +96,7 @@ export default function Navbar() {
                 to="/login"
                 aria-label="Sign in"
                 title="Sign in"
-                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/login' ? "underline decoration-wavy" : ""}`}
+                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/login' ? "underline underline-offset-8" : ""}`}
               >
                 Log in
               </Link>
@@ -85,7 +104,7 @@ export default function Navbar() {
             <li>
               <Link
                 to="/signup"
-                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/signup' ? "underline decoration-wavy" : ""}`}
+                className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/signup' ? "underline underline-offset-8" : ""}`}
                 aria-label="Sign up"
                 title="Sign up"
               >
@@ -99,33 +118,42 @@ export default function Navbar() {
                 aria-label="Sign up"
                 title="Sign up"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"  viewBox="0 0 16 16">
-                  <path style={{color:`${loc.pathname === '/cart' ?"grey" : ""}`}} d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
+                  <path style={{ color: `${loc.pathname === '/cart' ? "grey" : ""}` }} d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                 </svg>
               </Link>
             </li>
           </ul>
             :
-            <ul className="flex items-center hidden ml-auto space-x-8 lg:flex">
-              <li>
-                <Link
-                  to="/dashboard"
-                  className={`font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400 ${loc.pathname === '/dashboard' ? "underline decoration-wavy" : ""}`}
+            <ul className="flex items-center hidden my-2 ml-auto space-x-8 lg:flex">
+              <li onMouseOver={()=>{settoggle(true)}} onMouseLeave={()=>{settoggle(false)}}>
+                <div
+                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                   aria-label="Sign up"
-                  title="Sign up"
+                  title="Sign up"  
                 >
-                  Dashboard
-                </Link>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path style={{ color: `${loc.pathname === '/dashboard' ? "grey" : ""}` }} d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path style={{ color: `${loc.pathname === '/dashboard' ? "grey" : ""}` }} fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                  </svg>
+                </div>
+                {toggle&&<div className="absolute w-36 right-32 bg-gray-800 top-12 text-white rounded ">
+                  <ul className='my-4 mx-1'>
+                    <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/dashboard'>My Orders</Link></li><hr/>
+                    <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/addProfile'>My Account</Link></li><hr/>
+                    <li className='mx-4 my-4 mb-2 hover:text-gray-200' onClick={logout}>Logout</li>
+                  </ul>
+                </div>}
               </li>
               <li>
                 <Link
                   to="/cart"
-                  className={`inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none`}
+                  className={`inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none`}
                   aria-label="Sign up"
                   title="Sign up"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
-                    <path style={{color:`${loc.pathname === '/cart' ?"gray" : ""}`}} d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                    <path style={{ color: `${loc.pathname === '/cart' ? "gray" : ""}` }} d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                   </svg>
                 </Link>
               </li>
@@ -301,7 +329,10 @@ export default function Navbar() {
                           >
                             More..
                           </Link>
-                        </li>
+                        </li><hr/>
+                        <li className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">   
+                            My Profile
+                        </li><hr/>
                         <li className={loc.pathname === '/dashboard' ? "pl-4 bg-gray-300 rounded-md" : ""}>
                           <Link
                             to="/dashboard"
@@ -309,7 +340,17 @@ export default function Navbar() {
                             aria-label="Sign up"
                             title="Sign up"
                           >
-                            Dashboard
+                            My Order
+                          </Link>
+                        </li>
+                        <li className={loc.pathname === '/addProfile' ? "pl-4 bg-gray-300 rounded-md" : ""}>
+                          <Link
+                            to="/addProfile"
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                            aria-label="Sign up"
+                            title="Sign up"
+                          >
+                            My Account
                           </Link>
                         </li>
                         <li className={loc.pathname === '/cart' ? "pl-4 bg-gray-300 rounded-md" : ""}>
@@ -323,6 +364,16 @@ export default function Navbar() {
                               <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                             </svg>
                           </Link>
+                        </li>
+                        <li >
+                          <div
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                            aria-label="Sign up"
+                            title="Sign up"
+                            onClick={logout}
+                          >
+                            Logout
+                          </div>
                         </li>
                       </ul>}
                   </nav>

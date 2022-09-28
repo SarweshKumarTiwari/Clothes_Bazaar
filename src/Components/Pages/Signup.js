@@ -1,6 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import {useNavigate} from 'react-router-dom'
+import { authenticate } from '../functions';
+import {ToastContainer,toast} from 'react-toastify'
 
 export default function Signup() {
+  const navigate=useNavigate();
   const [isstrong, setisstrong] = useState({col:"#f87171",text:"Not Strong"});
   const passwdStrng=()=>{
     const psd=document.getElementById("password").value;
@@ -45,23 +49,29 @@ export default function Signup() {
     }
     if (email&&name&&password&&checked) {
       if (password===cnfpassword) {
-        Show({name:name,email:email,password:password});
+        authenticate("http://localhost:4000/register",
+        {name:name,email:email,password:password})
+        .then(x=>{
+          if(x.error){
+            toast.error(x.error);
+          }
+          else{
+            navigate("/");
+          }
+        });
       }
       else{
         document.getElementById("cp").innerText="Please checck the password";
       }
     }
-    else{
+    if(!password){
       document.getElementById("p").innerText="Please Enter Password"
     }
   }
 
-  const Show=(data)=>{
-    console.log(data);
-  }
-
   return (
     <div className="bg-white-800">
+      <ToastContainer/>
       <div className="p-2 lg:w-1/2 mx-auto">
         <div className="bg-white rounded-t-lg p-8">
           <p className="text-center text-sm text-gray-400 font-light">Sign up with</p>

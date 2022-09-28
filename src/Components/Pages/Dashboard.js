@@ -70,9 +70,9 @@ export default function Dashboard() {
               <Link to='/cart' className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow">
                 Cart
               </Link>
-              <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 focus:outline-none">
+              <Link to='/addProfile' className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 focus:outline-none">
                 Edit Profile
-              </button>
+              </Link>
               <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow">
                 Settings
               </button>
@@ -85,10 +85,10 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-            <div className="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
+            <div className="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800  top-0">
               <div className="flex w-full items-center">
                 <div className="flex pb-1 items-center text-3xl text-gray-900 dark:text-white">
-                  <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" className="w-12 mr-4 rounded-full" alt="profile" />
+                  <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" className="w-12 mr-4 rounded-full" alt="" />
                   Mert Cukuren
                 </div>
                 <div className="ml-auto sm:flex hidden items-center justify-end">

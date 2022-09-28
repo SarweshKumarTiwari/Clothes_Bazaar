@@ -1,6 +1,10 @@
-import React from 'react'
+import React from 'react';
+import {useNavigate} from 'react-router-dom'
+import {authenticate} from '../functions';
+import {ToastContainer,toast} from 'react-toastify';
 
 export default function Login() {
+  const navigate=useNavigate();
   const onSubmit=(e)=>{
     e.preventDefault();
     const email=document.getElementById("email").value;
@@ -18,11 +22,21 @@ export default function Login() {
       document.getElementById("p").innerText="";
     }
     if (email&&password) {
-      console.log({email:email,password:password});
+      authenticate("http://localhost:4000/login",
+      {email:email,password:password}
+      ).then(x=>{
+        if (x.error) {
+          toast.error(x.error);
+        }
+        else{
+          navigate("/");
+        }
+      })
     }
   }
   return (
     <div className="max-w-lg mx-auto my-5 bg-white p-8 rounded-xl shadow shadow-slate-300">
+        <ToastContainer/>
         <h1 className="text-4xl font-medium">Login</h1>
         <div className="my-5">
             <button className="w-full text-center py-3 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">

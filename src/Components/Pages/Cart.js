@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link,Navigate} from 'react-router-dom'
 export default function Cart() {
   let lst = [
     {
@@ -55,6 +55,7 @@ export default function Cart() {
       }
       }
   ]
+  const [isAuth] = useState(true)
   const [first,setfirst] = useState(lst)
   const add = (e) => {
     const element = lst.findIndex(ele=> ele.id === Number(e.target.value));
@@ -88,7 +89,7 @@ export default function Cart() {
 
 
   return (
-    <div className="bg-gray-100">
+    isAuth?<div className="bg-gray-100">
       <section>
         <section className="text-gray-600 body-font">
           <h4 className="font-medium leading-tight text-2xl mt-0 mb-2 text-gray-800 text-center">Your Cart</h4>
@@ -136,6 +137,7 @@ export default function Cart() {
           </div>
         </section>
       </section>
-    </div>
+    </div>:
+    <Navigate to="/"/>
   )
 }

@@ -12,6 +12,7 @@ import Home from "./Pages/Home"
 import Dashboard from "./Pages/Dashboard"
 import Footer from './Footer'
 import Item from './Pages/Item'
+import AddProfile from './Pages/AddProfile'
 
 export default function Main() {
   return (
@@ -27,6 +28,7 @@ export default function Main() {
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/item' element={<Item/>}/>
+            <Route path='/addProfile' element={<AddProfile/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
         </Routes>
         <Footer style={{marginTop:"25rem"}}/>
