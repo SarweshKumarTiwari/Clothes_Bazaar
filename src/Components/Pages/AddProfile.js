@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { authorise, update } from '../functions';
 
 export default function AddProfile() {
+    const [change, setchange] = useState(0);
+    const [name1, setname1] = useState("null")
     const [email, setemail] = useState("null")
     const [user, setuser] = useState("");
     const [name, setname] = useState("default");
@@ -24,6 +26,7 @@ export default function AddProfile() {
         .then(x=>{
                 if (!x.error) {
                     toast.success(x.success)
+                    setchange(change+1);
                 }
                 else{
                     toast.error(x.error)
@@ -53,11 +56,12 @@ export default function AddProfile() {
             setuser(x.success.data.UserName)
             setemail(x.success.data.Email);
             setname(x.success.data.Name);
+            setname1(x.success.data.Name)
             setphone(x.success.data.Phone);
             setadd(x.success.data.Address);
         }
-      })
-    })
+      });
+    },[change])
     
     return (
         <section className="py-6 bg-gray-100 bg-opacity-50">
@@ -70,7 +74,7 @@ export default function AddProfile() {
                             <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" alt="profile" className='rounded-full mr-4 w-12' srcSet="" />
                         </div>
                         <div className="mx-2 my-6 w-full">
-                            <p>{name}</p>
+                            <p>{name1}</p>
                         </div>
                         <div className="items-right mx-2 my-6  w-full">
                             <p className='text-right'>{email}</p>
