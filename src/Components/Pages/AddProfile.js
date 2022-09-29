@@ -1,19 +1,64 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { authorise, update } from '../functions';
 
 export default function AddProfile() {
+    const [email, setemail] = useState("null")
     const [user, setuser] = useState("");
-    const [name, setname] = useState("");
+    const [name, setname] = useState("default");
     const [phone, setphone] = useState("");
     const [add, setadd] = useState("");
     const [pass, setpass] = useState("");
     const [newpass, setnewpass] = useState("");
-    const update=(e)=>{
+    const updateprof=(e)=>{
         e.preventDefault();
-        toast.success("Successfully Updated");
-        console.log({user:user,name:name,phone:phone,add:add,pass:pass,newpass:newpass});
+        const ob={UserName:user,Name:name,Phone:phone,Address:add};
+        const data={'data':{}};
+        for (const key in ob) {
+            if (ob[key]!=='') {
+                data.data[key] = ob[key];   
+            }
+        }
+        update('http://localhost:4000/update',data)
+        .then(x=>{
+                if (!x.error) {
+                    toast.success(x.success)
+                }
+                else{
+                    toast.error(x.error)
+                }
+            })
     }
+    const changepassword=()=>{
+        if (!pass||!newpass) {
+            toast.error("Password field is empty")
+        }
+        else{
+            update('http://localhost:4000/updatepassword',
+            {data:{Password:pass,NewPassword:newpass}}
+            ).then(x=>{
+                if (!x.error) {
+                    toast.success(x.success)
+                }
+                else{
+                    toast.error(x.error)
+                }
+            })
+        }
+    }
+    useEffect(() => {
+      authorise("showprofile").then(x=>{
+        if (!x.error) {
+            setuser(x.success.data.UserName)
+            setemail(x.success.data.Email);
+            setname(x.success.data.Name);
+            setphone(x.success.data.Phone);
+            setadd(x.success.data.Address);
+        }
+      })
+    })
+    
     return (
         <section className="py-6 bg-gray-100 bg-opacity-50">
             <ToastContainer/>
@@ -25,10 +70,10 @@ export default function AddProfile() {
                             <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" alt="profile" className='rounded-full mr-4 w-12' srcSet="" />
                         </div>
                         <div className="mx-2 my-6 w-full">
-                            <p>John Doe</p>
+                            <p>{name}</p>
                         </div>
                         <div className="items-right mx-2 my-6  w-full">
-                            <p className='text-right'>johndoe123@gmail.com</p>
+                            <p className='text-right'>{email}</p>
                         </div>
                     </div>
                 </div><hr/>
@@ -83,14 +128,14 @@ export default function AddProfile() {
                             </div>
                         </div>
                         <div className="text-center md:w-3/12 md:pl-6">
-                            <button type="button" className="py-2 px-4  bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-pink-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                            <button type="button" className="py-2 px-4  bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-pink-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg " onClick={changepassword}>
                                 Change
                             </button>
                         </div>
                     </div>
                     <hr />
                     <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
-                        <button type="submit" className="py-2 px-4  bg-gray-600 hover:bg-gray-700  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none   rounded-lg " onClick={update}>
+                        <button type="submit" className="py-2 px-4  bg-gray-600 hover:bg-gray-700  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none   rounded-lg " onClick={updateprof}>
                             Save
                         </button>
                     </div>

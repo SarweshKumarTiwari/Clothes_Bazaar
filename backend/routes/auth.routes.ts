@@ -15,5 +15,6 @@ routes.post("/login",authLogin.loginUser);
 routes.get("/authorise",authLogin.authoriseUser,authLogin.show);
 routes.put("/update",authLogin.authoriseUser,profileUpdate.updateUser);
 routes.put("/updatepassword",authLogin.authoriseUser,profileUpdate.updatePassword);
+routes.get("/showprofile",authLogin.authoriseUser,profileUpdate.showProfile);
 
 export default routes;

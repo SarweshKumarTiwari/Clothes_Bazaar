@@ -1,19 +1,19 @@
 import axios from 'axios';
 
-export async function authorise() {
+export async function authorise(url) {
     if (!localStorage.getItem("AuthToken")) {
-        return false;
+        return {error:"not found"};
     }
-    const auth =await axios.get("http://localhost:4000/authorise", {
+    const auth =await axios.get(`http://localhost:4000/${url}`, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("AuthToken")}`
         }
     })
     if (!auth.data.error) {
-        return true;
+        return {success:auth.data};
     }
     else{
-        return false;
+        return {error:auth.data.error};
     }
 }
 
@@ -25,6 +25,20 @@ export async function authenticate(url,data) {
         return true;
     }
     else {
+        return {error:auth.data.error};
+    }
+}
+
+
+export async function update(url,data){
+    const auth=await axios.put(url,data,{
+        headers:{
+            'Authorization':`Bearer ${localStorage.getItem('AuthToken')}`
+        }
+    });
+    if (!auth.data.error) {
+        return {success:auth.data.success};
+    }else{
         return {error:auth.data.error};
     }
 }

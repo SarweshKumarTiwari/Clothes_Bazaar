@@ -18,8 +18,8 @@ export default function Navbar() {
   }, [loc.pathname])
 
   useEffect(()=>{
-    authorise().then(x=>{
-      if (x) {
+    authorise('authorise').then(x=>{
+      if (!x.error) {
         setisAuth(true);
       }
       else{
