@@ -70,7 +70,7 @@ export default function ResetPassword() {
         </div>:
         <div className="max-w-lg mx-auto my-24 bg-gray-100 p-8 rounded-xl shadow shadow-slate-300">
              <h1 className="text-2xl font-medium">OOPS...</h1>
-             <p className="font-medium text-slate-700 pb-2">Please check link or link is expired</p>
+             <p className="font-medium text-slate-700 pb-2">Please check your link your link is expired</p>
         </div>
   )
 }
