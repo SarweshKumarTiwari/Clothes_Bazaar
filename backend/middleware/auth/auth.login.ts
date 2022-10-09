@@ -2,6 +2,8 @@ import {Request,Response,NextFunction} from 'express';
 import bcrypt from "bcrypt";
 import users from "../../models/UsersModel/UserReg";
 import token from '../token';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class AuthUser{
     async loginUser(req:Request,res:Response,next:NextFunction){
@@ -12,16 +14,16 @@ class AuthUser{
         if (!data||!await bcrypt.compare(req.body.password,data.Password)) {
             return res.json({error:"Email or password is incorrect"});
         }
-        return res.status(200).json({token:token.generateToken(data),success:"succesfully logged In"});
+        return res.status(200).json({token:token.generateToken(data,process.env.AUTH_TOKEN as string),success:"succesfully logged In"});
 
     }
     async authoriseUser(req:Request,res:Response,next:NextFunction) {
         const token1=req.headers["authorization"];
         if (!token1) {
-            return res.status(401).json({error:"Bad Request"})
+            return res.json({error:"Bad Request"})
         }
         const payload=token1&&token1.split(" ")[1];
-        const data:any=token.verifyToken(payload);
+        const data:any=token.verifyToken(payload,process.env.AUTH_TOKEN as string);
         if (data.length<=0) {
             return res.status(400).json({error:"Bad Request"});
         }

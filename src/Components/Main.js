@@ -7,12 +7,14 @@ import Kids from "./Pages/Kids"
 import More from "./Pages/More"
 import Login from "./Pages/Login"
 import Signup from "./Pages/Signup"
-import Cart from "./Pages/Cart"
 import Home from "./Pages/Home"
 import Dashboard from "./Pages/Dashboard"
 import Footer from './Footer'
 import Item from './Pages/Item'
 import AddProfile from './Pages/AddProfile'
+import Cart from './Pages/Cart'
+import ForgotPassword from './Pages/ForgotPassword'
+import ResetPassword from './Pages/ResetPassword'
 
 export default function Main() {
   return (
@@ -30,6 +32,8 @@ export default function Main() {
             <Route path='/item' element={<Item/>}/>
             <Route path='/addProfile' element={<AddProfile/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
+            <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+            <Route path='/reset_password/:token/:id' element={<ResetPassword/>}/>
         </Routes>
         <Footer style={{marginTop:"25rem"}}/>
     </Router>

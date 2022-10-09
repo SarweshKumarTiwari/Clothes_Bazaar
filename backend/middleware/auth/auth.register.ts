@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import validator from "validator";
 import bcrypt from 'bcrypt';
 import token from "../token";
+import dotenv from 'dotenv';
 import User from "../../models/UsersModel/UserReg";
+dotenv.config();
 
 class AuthRegistration {
     async verifyUsersParam(req: Request, res: Response, next: NextFunction) {
@@ -45,7 +47,7 @@ class AuthRegistration {
             });
             data.save().then(saved=>{
                 if (saved===data) {
-                    const tok:string=token.generateToken(saved);
+                    const tok:string=token.generateToken(saved,process.env.AUTH_TOKEN as string);
                     return res.status(201).json({success:"successfully saved data",token:tok});
                 }
             });

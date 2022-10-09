@@ -4,9 +4,6 @@ import Cart from "../../models/UsersModel/UserCart";
 class CartOps{
     async insertItem(req:Request,res:Response){
         try {
-            if (req.body==={}) {
-                return res.status(400).json({error:"no input data"});
-            }
             if (!req.body.title||!req.body.quantity
                 ||!req.body.price||!req.body.category||!req.body.image){
 

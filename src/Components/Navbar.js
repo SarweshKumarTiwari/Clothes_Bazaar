@@ -114,6 +114,7 @@ export default function Navbar() {
             <li>
               <Link
                 to="/cart"
+                state={{isAuth:isAuth}}
                 className={`inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none`}
                 aria-label="Sign up"
                 title="Sign up"
@@ -140,7 +141,7 @@ export default function Navbar() {
                 {toggle&&<div className="absolute w-36 right-32 bg-gray-800 top-12 text-white rounded ">
                   <ul className='my-4 mx-1'>
                     <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/dashboard'>My Orders</Link></li><hr/>
-                    <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/addProfile'>My Account</Link></li><hr/>
+                    <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/addProfile' state={{isAuth:isAuth}}>My Account</Link></li><hr/>
                     <li className='mx-4 my-4 mb-2 hover:text-gray-200' onClick={logout}>Logout</li>
                   </ul>
                 </div>}
@@ -148,6 +149,7 @@ export default function Navbar() {
               <li>
                 <Link
                   to="/cart"
+                  state={{isAuth:isAuth}}
                   className={`inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none`}
                   aria-label="Sign up"
                   title="Sign up"
@@ -278,6 +280,7 @@ export default function Navbar() {
                       <li className={loc.pathname === '/cart' ? "pl-4 bg-gray-300 rounded-md" : ""}>
                         <Link
                           to="/cart"
+                          state={{isAuth:isAuth}}
                           className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                           aria-label="Sign up"
                           title="Sign up"
@@ -336,6 +339,7 @@ export default function Navbar() {
                         <li className={loc.pathname === '/dashboard' ? "pl-4 bg-gray-300 rounded-md" : ""}>
                           <Link
                             to="/dashboard"
+                            state={{isAuth:isAuth}}
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                             aria-label="Sign up"
                             title="Sign up"
@@ -356,6 +360,7 @@ export default function Navbar() {
                         <li className={loc.pathname === '/cart' ? "pl-4 bg-gray-300 rounded-md" : ""}>
                           <Link
                             to="/cart"
+                            state={{isAuth:isAuth}}
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                             aria-label="Sign up"
                             title="Sign up"

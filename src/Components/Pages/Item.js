@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'
+import React, { useState,useEffect} from 'react';
+import { useLocation,useNavigate,Link} from 'react-router-dom'
+import { authorise, insert } from '../functions';
 
 export default function Item() {
+  const navigate=useNavigate();
   const loc = useLocation();
   const [first] = useState(loc.state);
+  const [second, setsecond] = useState([]);
   const run = () => {
-    console.log(loc.state.id);
+    insert('insertitem',first).then(e=>{
+      if (!e.error) {
+        navigate('/cart');
+      }
+      else{
+        navigate('/login');
+      }
+    })
   }
+  useEffect(()=>{
+    authorise('showitems').then(e=>{
+      if (!e.error){
+        setsecond(e.success.data);
+      }
+    })
+  },[])
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-10 mx-auto">
@@ -43,7 +60,10 @@ export default function Item() {
             <div className="flex my-10">
               <span className="title-font font-medium text-2xl text-gray-900">{first.price} INR</span>
               <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={run}>Buy</button>
-              <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={run}>Add to cart</button>
+              <div className="px-6">
+               {second.findIndex(e=>e.title===first.title)!==-1?<Link to='/cart' className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Go to cart</Link>:
+               <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={run}>Add to cart</button>}
+              </div>
               <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4" >
                 <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                   <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>

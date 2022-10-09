@@ -3,21 +3,21 @@ import dotenv from "dotenv";
 dotenv.config();
 
 class Token{
-    generateToken(data:any) {
+    generateToken(data:any,secret:string) {
         data=data.toJSON();
         if (data.length===0) {
             return "There is no data";
         }
-        const token:string=process.env.AUTH_TOKEN as string;
+        const token:string=secret as string;
         const payload=jwt.sign(data,token);
         return payload;
     }
-    verifyToken(token:any){
+    verifyToken(token:any,secret:string){
         try {
             if (!token) {
                 return {error:"invalid credentials"};
             }
-            const data=jwt.verify(token,process.env.AUTH_TOKEN as string);
+            const data=jwt.verify(token,secret as string);
             return data;    
         } catch (error) {
             return {error:error};
