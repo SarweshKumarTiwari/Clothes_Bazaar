@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { authorise, deleteitem } from '../functions'
 import { Link, Navigate } from 'react-router-dom'
+import axios from 'axios';
+import {ToastContainer,toast} from 'react-toastify'
 export default function Cart() {
   let no = 0;
   const list=[];
@@ -53,7 +55,18 @@ export default function Cart() {
     return Math.round(price);
   }
   const purchaseall=()=>{
-    console.log(list);
+    axios.post('http://localhost:4000/insert_Purchaseditems',{data:list},{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem("AuthToken")}`
+      }
+    }).then(e=>{
+      if (!e.data.error) {
+        toast.success("Purchased all successfully !")
+      }
+      else{
+        toast.error(!e.data.error)
+      }
+    }).catch(()=>toast.error("Server error"))
   }
 
   useEffect(() => {
@@ -69,6 +82,7 @@ export default function Cart() {
   return (
     isAuth ? <div className="bg-gray-100">
       {before?<section>
+        <ToastContainer/>
         <section className="text-gray-600 body-font">
           <div className="container px-5  pb-1 py-3 mx-auto">
             <h4 className="font-medium leading-tight text-2xl mt-0 mb-2 text-gray-800 text-center">Your Cart</h4>
@@ -80,7 +94,7 @@ export default function Cart() {
               </div>
               <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={purchaseall}>Purchase All</button>
             </div>
-            {first.length ? first.map(e =>list.push({ id:e.id,title: e.title, price: e.price, quantity: e.quantity, description: e.description, category: e.category, image: e.image })
+            {first.length ? first.map(e =>list.push({ title: e.title, price: e.price, quantity: e.quantity, description: e.description, category: e.category, image: e.image })
               &&<div className="p-5 bg-white flex items-center mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col" key={e._id}>
               <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center flex-shrink-0">
                 <img
