@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { authorise, deleteitem } from '../functions'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate,useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {ToastContainer,toast} from 'react-toastify'
 export default function Cart() {
   let no = 0;
   const list=[];
+  const nav=useNavigate();
   const [isAuth, setisAuth] = useState(!localStorage.getItem("AuthToken") ? false : true);
   const [first, setfirst] = useState([]);
   const [before, setbefore] = useState(false);
@@ -62,6 +63,7 @@ export default function Cart() {
     }).then(e=>{
       if (!e.data.error) {
         toast.success("Purchased all successfully !")
+        nav("/successfully_purchased");
       }
       else{
         toast.error(!e.data.error)
@@ -140,10 +142,8 @@ export default function Cart() {
           </div>
         </section>
       </section>:
-      <div className="flex items-center justify-center bg-gray-100 py-10">
-      <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
+      <div className="flex justify-center items-center space-x-2">
+        <span >Loading...</span>
     </div>}
     </div> :
       <Navigate to="/login" />

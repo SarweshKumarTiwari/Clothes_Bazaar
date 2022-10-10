@@ -1,11 +1,13 @@
 import React, { useState ,useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
 import { authorise,deleteitem } from '../functions';
 export default function Dashboard() {
   let no=0;
+  const navigate=useNavigate();
   const [before, setbefore] = useState(false)
   const [first, setfirst] = useState([]);
+  const [user, setuser] = useState({name:'',email:""})
   const remove = e => {
     const newarr = [...first];
     const index = newarr.findIndex(ele => ele.id ===e.target.value);
@@ -26,6 +28,11 @@ export default function Dashboard() {
         setfirst(e.success.data);
         setbefore(true);
       } else {setbefore(false) }
+    });
+    authorise('showprofile').then(e=>{
+      if (!e.error){
+        setuser({name:e.success.data.Name,email:e.success.data.Email});
+      }
     })
   }, [no]);
   return (
@@ -49,7 +56,7 @@ export default function Dashboard() {
               <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow">
                 Add Friends
               </button>
-              <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow" onClick={()=>localStorage.removeItem("AuthToken")}>
+              <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow" onClick={()=>{localStorage.removeItem("AuthToken");navigate("/")}}>
                 Logout
               </button>
             </div>
@@ -59,12 +66,12 @@ export default function Dashboard() {
               <div className="flex w-full items-center">
                 <div className="flex pb-1 items-center text-3xl text-gray-900 dark:text-white">
                   <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" className="w-12 mr-4 rounded-full" alt="" />
-                  Mert Cukuren
+                  {user.name}
                 </div>
                 <div className="ml-auto sm:flex hidden items-center justify-end">
                   <div className="text-right">
                     <div className="text-xs text-gray-400 dark:text-gray-400">Email:</div>
-                    <div className="text-gray-900 text-lg dark:text-white">nobody1234@company.com</div>
+                    <div className="text-gray-900 text-lg dark:text-white">{user.email}</div>
                   </div>
                 </div>
               </div>
@@ -72,7 +79,7 @@ export default function Dashboard() {
             <div className="sm:p-7 p-4 my-5">
               <ToastContainer/>
               {before?first.length ? first.map(e =>
-                <div className="w-full flex  border-2 border-b-4 border-gray-200 rounded-xl my-2 hover:bg-gray-50" key={e.id}>
+                <div className="w-full flex  border-2 border-b-4 border-gray-200 rounded-xl my-2 hover:bg-gray-50" key={e._id}>
                   <Link to='/item' className='w-full' state={{ title: e.title, price: e.price, quantity:"1", description: e.description, category: e.category, image: e.image }}>
                     <div className="grid grid-cols-6 p-5 gap-y-2">
                       <div>

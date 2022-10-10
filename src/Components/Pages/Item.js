@@ -20,7 +20,7 @@ export default function Item() {
   const purchase=()=>{
     insert('insert_Purchaseditem',first).then(e=>{
       if (!e.error) {
-        console.log(e.success);
+        navigate("/successfully_purchased")
       }
       else{
         navigate('/login');
