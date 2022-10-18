@@ -5,7 +5,7 @@ import { authorise, update } from '../functions';
 
 export default function AddProfile() {
     const [change, setchange] = useState(0);
-    const [name1, setname1] = useState("null")
+    const [name1, setname1] = useState("")
     const [email, setemail] = useState("null")
     const [user, setuser] = useState("");
     const [name, setname] = useState("default");
@@ -71,7 +71,7 @@ export default function AddProfile() {
                     <h1 className='text-2xl text-center'>Personal Details</h1>
                     <div className="md:inline-flex w-full">
                         <div className="my-2 w-36">
-                            <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" alt="profile" className='rounded-full mr-4 w-12' srcSet="" />
+                            <img src={`https://img.icons8.com/external-others-inmotus-design/344/external-${!name1?'A':name1[0]}-alphabet-others-inmotus-design-20.png`} alt="profile" className='rounded-full mr-4 w-12' srcSet="" />
                         </div>
                         <div className="mx-2 my-6 w-full">
                             <p>{name1}</p>
