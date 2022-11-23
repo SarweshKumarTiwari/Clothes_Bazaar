@@ -7,6 +7,7 @@ export default function Item() {
   const loc = useLocation();
   const [first] = useState(loc.state);
   const [second, setsecond] = useState([]);
+  const [isauth, setisauth] = useState(false);
   const run = () => {
     insert('insertitem',first).then(e=>{
       if (!e.error) {
@@ -17,20 +18,11 @@ export default function Item() {
       }
     })
   }
-  const purchase=()=>{
-    insert('insert_Purchaseditem',first).then(e=>{
-      if (!e.error) {
-        navigate("/successfully_purchased")
-      }
-      else{
-        navigate('/login');
-      }
-    })
-  }
   useEffect(()=>{
     authorise('showitems').then(e=>{
       if (!e.error){
         setsecond(e.success.data);
+        setisauth(true);
       }
     })
   },[])
@@ -69,7 +61,8 @@ export default function Item() {
 
             <div className="flex my-10">
               <span className="title-font font-medium text-2xl text-gray-900">{first.price} INR</span>
-              <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={purchase}>Buy</button>
+              {isauth?<Link className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" to='/successfully_purchased' state={[first]}>Purchase</Link>:
+              <Link className='flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded' to='/login'>Purchase</Link>}
               <div className="px-6">
                {second.findIndex(e=>e.title===first.title)!==-1?<Link to='/cart' className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Go to cart</Link>:
                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={run}>Add to cart</button>}

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext} from 'react';
 import pic from "./images/cb.png";
 import { Link, useLocation,useNavigate} from "react-router-dom"
 import { authorise } from './functions';
+import {StateProvider} from './context/Navtoggle';
 
 export default function Navbar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate=useNavigate();
-
+  const {data,data2}=useContext(StateProvider);
   //This 'isAuth' variable is used to check if User is Authorised 
   const [isAuth,setisAuth] = useState(false);
   const [toggle, settoggle] = useState(false);
@@ -127,9 +128,9 @@ export default function Navbar() {
           </ul>
             :
             <ul className="flex items-center hidden my-2 ml-auto space-x-8 lg:flex">
-              <li onMouseOver={()=>{settoggle(true)}} onMouseLeave={()=>{settoggle(false)}}>
+              <li onMouseOver={()=>{settoggle(true);data.updateTrue()}} onMouseLeave={()=>{settoggle(false);data.updateFalse()}}>
                 <div
-                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                  className="inline-flex items-center justify-center h-4 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                   aria-label="Sign up"
                   title="Sign up"  
                 >
@@ -138,7 +139,7 @@ export default function Navbar() {
                     <path style={{ color: `${loc.pathname === '/dashboard' ? "grey" : ""}` }} fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                   </svg>
                 </div>
-                {toggle&&<div className="absolute w-36 right-32 bg-gray-800 top-12 text-white rounded ">
+                {toggle&&<div className="absolute w-36 right-32 bg-gray-800 top-8 text-white rounded ">
                   <ul className='my-4 mx-1'>
                     <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/dashboard'>My Orders</Link></li><hr/>
                     <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/addProfile' state={{isAuth:isAuth}}>My Account</Link></li><hr/>
@@ -150,7 +151,7 @@ export default function Navbar() {
                 <Link
                   to="/cart"
                   state={{isAuth:isAuth}}
-                  className={`inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none`}
+                  className={`inline-flex items-center justify-center h-4 px-6 font-medium tracking-wide text-gray-100 transition duration-200 rounded  bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none`}
                   aria-label="Sign up"
                   title="Sign up"
                 >
@@ -165,7 +166,7 @@ export default function Navbar() {
               aria-label="Open Menu"
               title="Open Menu"
               className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => setIsMenuOpen(true)}
+              onClick={() =>{ setIsMenuOpen(true);data2.updateTrue()}}
             >
               <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
                 <path
@@ -204,7 +205,7 @@ export default function Navbar() {
                         aria-label="Close Menu"
                         title="Close Menu"
                         className="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={() =>{ setIsMenuOpen(false);data2.updateFalse()}}
                       >
                         <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
                           <path
@@ -215,7 +216,7 @@ export default function Navbar() {
                       </button>
                     </div>
                   </div>
-                  <nav>
+                  <nav >
                     {!isAuth ? <ul className="space-y-4">
                       <li className={loc.pathname === '/men' ? "pl-4 bg-gray-300 rounded-md" : ""}>
                         <Link

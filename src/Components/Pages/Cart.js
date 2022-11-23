@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext} from 'react'
 import { authorise, deleteitem } from '../functions'
-import { Link, Navigate,useNavigate} from 'react-router-dom'
-import axios from 'axios';
-import {ToastContainer,toast} from 'react-toastify'
+import { Link, Navigate} from 'react-router-dom'
+import { StateProvider } from '../context/Navtoggle';
 export default function Cart() {
   let no = 0;
   const list=[];
-  const nav=useNavigate();
   const [isAuth, setisAuth] = useState(!localStorage.getItem("AuthToken") ? false : true);
   const [first, setfirst] = useState([]);
   const [before, setbefore] = useState(false);
+  const {data,data2}=useContext(StateProvider)
   const add = (e) => {
     const ind = first.findIndex(e1 => e1._id === e.target.value);
     const newarr = [...first];
@@ -55,21 +54,6 @@ export default function Cart() {
     });
     return Math.round(price);
   }
-  const purchaseall=()=>{
-    axios.post('http://localhost:4000/insert_Purchaseditems',{data:list},{
-      headers:{
-        "Authorization":`Bearer ${localStorage.getItem("AuthToken")}`
-      }
-    }).then(e=>{
-      if (!e.data.error) {
-        toast.success("Purchased all successfully !")
-        nav("/successfully_purchased");
-      }
-      else{
-        toast.error(!e.data.error)
-      }
-    }).catch(()=>toast.error("Server error"))
-  }
 
   useEffect(() => {
     authorise('showitems').then(e => {
@@ -84,17 +68,16 @@ export default function Cart() {
   return (
     isAuth ? <div className="bg-gray-100">
       {before?<section>
-        <ToastContainer/>
         <section className="text-gray-600 body-font">
-          <div className="container px-5  pb-1 py-3 mx-auto">
+          <div className="container px-5   pb-1 py-3 mx-auto">
             <h4 className="font-medium leading-tight text-2xl mt-0 mb-2 text-gray-800 text-center">Your Cart</h4>
-            <div className="p-5 bg-white flex items-center mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col">
+            <div className={`p-5 bg-white flex items-center ${data.state||data2.state?"":"sticky top-0"} mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col`}>
               <h3 className="text-black text-2xl title-font font-bold mb-2">Buy All :</h3>
-              <h5 className='text-black mx-24 title-font  mb-0.5'>The total purchase Cost :<span className="font-bold px-10 text-xl">{totalPrice()}</span></h5>
+              <h5 className='text-black mx-24 title-font  mb-0.5'>The total purchase Cost :<span className="font-bold px-10 text-xl">₹{totalPrice()}</span></h5>
               <div className="flex mb-0.5">
                 <p className="text-black mx-24 title-font mb-0.5">Total number of Items :<span className="font-bold px-10 text-xl">{first.length}</span></p>
               </div>
-              <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={purchaseall}>Purchase All</button>
+              <Link className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" to='/successfully_purchased' state={first} >Purchase All</Link >
             </div>
             {first.length ? first.map(e =>list.push({ title: e.title, price: e.price, quantity: e.quantity, description: e.description, category: e.category, image: e.image })
               &&<div className="p-5 bg-white flex items-center mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col" key={e._id}>
@@ -115,12 +98,12 @@ export default function Cart() {
                     </div>
                     <div className="w-1/2">
                       <h2 className="text-gray-500">Price</h2>
-                      <p>{Math.round(e.price)}</p>
+                      <p>₹{Math.round(e.price)}</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex ">
-                  <Link className="mt-3 text-red-500 text-center inline-flex items-center" to='/item' state={{ title: e.title, price: e.price, quantity: e.quantity, description: e.description, category: e.category, image: e.image }}>Purchase
+                  <Link className="mt-3 text-red-500 text-center inline-flex items-center" to='/item' state={e}>Purchase
                   </Link>
                   <button className="mt-3 mx-6 text-red-500 text-center inline-flex items-center" value={e._id} onClick={remove}>Remove
                     <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">

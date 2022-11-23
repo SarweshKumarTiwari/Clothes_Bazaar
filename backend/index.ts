@@ -2,7 +2,8 @@ import express,{Application,Request,Response,NextFunction} from 'express';
 import dotenv from 'dotenv';
 import connect from './connectDB';
 import userRoutes from './routes/auth.routes';
-import cartRoutes from './routes/cart.routes'
+import cartRoutes from './routes/cart.routes';
+import sellerRoutes from './routes/seller.routes';
 
 dotenv.config();
 connect();
@@ -21,6 +22,7 @@ app.use(function(req:Request,res:Response,next:NextFunction){
 
 app.use(userRoutes);
 app.use(cartRoutes);
+app.use(sellerRoutes);
 
 app.listen(port,()=>{console.log(`Server is running at port ${port}`)});
 

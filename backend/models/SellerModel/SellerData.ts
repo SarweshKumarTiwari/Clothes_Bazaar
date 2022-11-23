@@ -1,6 +1,6 @@
 import mongoose,{Schema} from "mongoose";
 
-const UserSchema:Schema=new Schema({
+const SellerSchema=new Schema({
     Name:{
         type:String,
         required:true
@@ -15,11 +15,11 @@ const UserSchema:Schema=new Schema({
     },
     Address:{
         type:String,
-        required:false
+        required:true
     },
     Pincode:{
         type:String,
-        required:false
+        required:true
     },
     Password:{
         type:String,
@@ -35,4 +35,4 @@ const UserSchema:Schema=new Schema({
     }
 });
 
-export default mongoose.model("UsersInfo",UserSchema);
+export default mongoose.model("SellerInfo",SellerSchema);
