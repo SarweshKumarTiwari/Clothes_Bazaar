@@ -18,6 +18,9 @@ import ResetPassword from './Pages/ResetPassword'
 import OnPurchase from './Pages/OnPurchase'
 import { IsAuth, IsNotAuth } from './ProtectedRoutes'
 import Navtoggle from './context/Navtoggle'
+import SellerSignup from './Client/SellerSignup'
+import SellerLogin from './Client/SellerLogin'
+import SellerAddItems from './Client/SellerAddItems'
 
 
 export default function Main() {
@@ -37,6 +40,9 @@ export default function Main() {
           <Route path='/item' element={<Item />} />
           <Route path='/addProfile' element={<IsNotAuth Component={AddProfile} />} />
           <Route path='/dashboard' element={<IsNotAuth Component={Dashboard} />} />
+          <Route path='/sellersignup' element={<SellerSignup/>}/>
+          <Route path='/sellerlogin' element={<SellerLogin/>}/>
+          <Route path='/selleradditems' element={<SellerAddItems/>}></Route>
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/reset_password/:token/:id' element={<ResetPassword />} />
           <Route path='/successfully_purchased' element={<OnPurchase />} />

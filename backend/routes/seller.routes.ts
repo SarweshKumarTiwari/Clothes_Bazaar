@@ -13,7 +13,7 @@ routes.post("/registerseller", AuthRegister.verifyUsersParam,
     AuthRegister.RegisterUser);
 
 routes.post("/loginseller",authLogin.loginUser);
-routes.get("/authorise",authLogin.authoriseUser,authLogin.show);
+routes.get("/authoriseseller",authLogin.authoriseUser,authLogin.show);
 routes.post("/fillstock",authLogin.authoriseUser,InStockCrud.insertItem);
 routes.get("/iteminstock",authLogin.authoriseUser,InStockCrud.showItems);
 routes.get("/:category",Update.upload);

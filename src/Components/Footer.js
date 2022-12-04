@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
     return (
@@ -81,14 +82,10 @@ export default function Footer() {
                                     </a>
                                 </li>
                                 <li className="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
-                                    <a href="/">
-                                        Plugins
-                                    </a>
+                                    <Link to='/sellerlogin'>Seller Login</Link>
                                 </li>
                                 <li className="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
-                                    <a href="/">
-                                        LinkedIn
-                                    </a>
+                                    <Link to='/sellersignup'>Become Seller</Link>
                                 </li>
                             </ul>
                         </div>

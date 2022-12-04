@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useState ,useEffect} from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
@@ -56,7 +57,7 @@ export default function Dashboard() {
               <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow">
                 Add Friends
               </button>
-              <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow" onClick={()=>{localStorage.removeItem("AuthToken");navigate("/")}}>
+              <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 hover:shadow-lg relative hover:ring-2 ring-blue-500 shadow" onClick={()=>{Cookies.remove("AuthToken");navigate("/")}}>
                 Logout
               </button>
             </div>

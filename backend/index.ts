@@ -4,6 +4,7 @@ import connect from './connectDB';
 import userRoutes from './routes/auth.routes';
 import cartRoutes from './routes/cart.routes';
 import sellerRoutes from './routes/seller.routes';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 connect();
@@ -19,7 +20,7 @@ app.use(function(req:Request,res:Response,next:NextFunction){
     next();
 
 })
-
+app.use(cookieParser())
 app.use(userRoutes);
 app.use(cartRoutes);
 app.use(sellerRoutes);

@@ -1,14 +1,14 @@
 import axios from 'axios';
+import jsCookie from 'js-cookie';
 
-
-export async function authorise(url) {
+export async function authorise(url,authToken="AuthToken") {
     try {    
-        if (!localStorage.getItem("AuthToken")) {
+        if (!jsCookie.get(authToken)) {
             return {error:"not found"};
         }
         const auth =await axios.get(`http://localhost:4000/${url}`, {
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("AuthToken")}`
+                "Authorization": `Bearer ${jsCookie.get(authToken)}`
             }
         });
         if (!auth.data.error) {
@@ -23,10 +23,10 @@ export async function authorise(url) {
 }
 
 
-export async function authenticate(url,data) {
+export async function authenticate(url,data,authToken="AuthToken") {
     const auth = await axios.post(url, data);
     if (!auth.data.error) {
-        localStorage.setItem("AuthToken", auth.data.token);
+        jsCookie.set(authToken,auth.data.token)
         return true;
     }
     else {
@@ -35,13 +35,13 @@ export async function authenticate(url,data) {
 }
 
 
-export async function update(url,data){
-    if (!localStorage.getItem('AuthToken')) {
+export async function update(url,data,authToken="AuthToken"){
+    if (!jsCookie.get(authToken)) {
         return {error:"not found"};
     }
     const auth=await axios.put(url,data,{
         headers:{
-            'Authorization':`Bearer ${localStorage.getItem('AuthToken')}`
+            'Authorization':`Bearer ${jsCookie.get(authToken)}`
         }
     });
     if (!auth.data.error) {
@@ -51,13 +51,13 @@ export async function update(url,data){
     }
 }
 
-export async function insert(url,data){
-    if (!localStorage.getItem('AuthToken')) {
+export async function insert(url,data,authToken="AuthToken"){
+    if (!jsCookie.get(authToken)) {
         return {error:"not found"};
     }
     const auth=await axios.post(`http://localhost:4000/${url}`,data,{
         headers:{
-            'Authorization':`Bearer ${localStorage.getItem('AuthToken')}`
+            'Authorization':`Bearer ${jsCookie.get(authToken)}`
         }
     });
     if (!auth.data.error) {
@@ -67,13 +67,13 @@ export async function insert(url,data){
     }
 }
 
-export async function deleteitem(url,id){
-    if (!localStorage.getItem('AuthToken')) {
+export async function deleteitem(url,id,authToken="AuthToken"){
+    if (!jsCookie.get(authToken)) {
         return {error:"not found"};
     }
     const auth=await axios.delete(`http://localhost:4000/${url}`,{
         headers:{
-            'Authorization':`Bearer ${localStorage.getItem('AuthToken')}`
+            'Authorization':`Bearer ${jsCookie.get(authToken)}`
         },
         data:id,
     });

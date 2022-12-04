@@ -22,11 +22,8 @@ export default function Navtoggle(props) {
                 data2:{
                     state:
                         small,
-                    updateTrue: () => {
-                        setsmall(true)
-                    },
-                    updateFalse: () => {
-                        setsmall(false)
+                    update: (val) => {
+                        setsmall(val);
                     }
                 }
             }}>

@@ -2,10 +2,11 @@ import React, { useState, useEffect,useContext} from 'react'
 import { authorise, deleteitem } from '../functions'
 import { Link, Navigate} from 'react-router-dom'
 import { StateProvider } from '../context/Navtoggle';
+import Cookies from 'js-cookie';
 export default function Cart() {
   let no = 0;
   const list=[];
-  const [isAuth, setisAuth] = useState(!localStorage.getItem("AuthToken") ? false : true);
+  const [isAuth, setisAuth] = useState(!Cookies.get("AuthToken") ? false : true);
   const [first, setfirst] = useState([]);
   const [before, setbefore] = useState(false);
   const {data,data2}=useContext(StateProvider)

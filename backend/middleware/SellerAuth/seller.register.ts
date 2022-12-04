@@ -48,8 +48,10 @@ class AuthRegistration {
                 Pincode:req.body.pincode
             });
             data.save().then(saved=>{
+                
                 if (saved===data) {
                     const tok:string=token.generateToken(saved,process.env.AUTH_TOKEN as string);
+                    res.cookie("cookie",tok);
                     return res.status(201).json({success:"successfully saved data",token:tok});
                 }
             });
