@@ -1,5 +1,5 @@
 import { Response,Request } from "express";
-import SellerStock from "../../models/SellerModel/SellerStock";
+import SellerStock from "../../db/entities/SellerModel/SellerStock";
 class InStockCrud{
     async insertItem(req:Request,res:Response){
         try {

@@ -1,3 +1,50 @@
+# Overview of this web app
+This is a ecommerce project in which users are allowed to register them and use the app.
+In this project we allow user to add items to cart if logged in and also  to update their profile,and to change their password.
+this project also contains seller's integration in which sellers are allowed to register them,and use the app for their own business benifit , and we allow seller to add their product to web so that they can expand their business and still we are working on this project...
+
+# Tools used in this project
+ 1)FrontEnd (React-Framework)
+    
+    1.1)This is a react app so we have used => npx create-react-app <app_name>
+    
+    1.2)react-router
+    
+    1.3)react-tostify
+
+    1.4)tailwind.css
+
+2)Backend (Node.js)
+   => Used TypeScript in this project for server devlopment
+    
+    2.1)express.js
+    
+    2.2)bcrypt.js
+    
+    2.3)mongoose.js
+    
+    2.4)jsonwebtoken.js
+
+# How to run this code on your own machine
+
+    1)First intiate git in your folder "git init"
+
+    2)Then copy this command "git clone https://github.com/SarweshKumarTiwari/Clothes_Bazaar.git"
+
+    3)Now open two command prompts
+
+    4)On first cmd  type this command "npm run start"
+
+    5)On Second cmd type "cd backend" and then "npm run dev"
+
+    6)Now both frontend and backend servers are running
+
+    7)Go to your web browser and type "http://localhost:3000"
+
+# Status of this project
+     This project is still under work...
+     and the type of this project is very initial
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

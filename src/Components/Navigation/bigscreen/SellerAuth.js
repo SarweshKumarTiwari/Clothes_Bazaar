@@ -1,16 +1,26 @@
 import Cookies from 'js-cookie';
-import React,{ useState, useContext } from 'react'
+import React,{ useState, useContext,useEffect } from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import { StateProvider } from '../../context/Navtoggle';
+import { authorise } from '../../functions';
 
 export default function SellerAuth(props) {
     const [toggle, settoggle] = useState(false);
+    const [name, setname] = useState('')
     const {data}=useContext(StateProvider);
     const navigate=useNavigate();
     const logout=()=>{
         Cookies.remove("SellerToken");
         navigate("/")
       }
+    useEffect(() => {
+     authorise("showprofile","SellerToken").then(e=>{
+      if (!e.error) {
+        setname(e.success.data.Name)
+      }
+     })
+    }, [])
+    
   return (
     <ul className="flex items-center hidden my-2 ml-auto space-x-8 lg:flex">
     <li onMouseOver={()=>{settoggle(true);data.updateTrue()}} onMouseLeave={()=>{settoggle(false);data.updateFalse()}} className='flex'>
@@ -27,6 +37,7 @@ export default function SellerAuth(props) {
       </div>
       {toggle&&<div className="absolute w-36 right-10 bg-gray-800 top-8 text-white rounded-lg ">
         <ul className='my-4 mx-1'>
+        <li className="mx-4 my-4 mb-2 hover:text-gray-200">Hey, {name}</li><hr/>
         <li className="mx-4 my-4 mb-2 hover:text-gray-200">Your Billings</li><hr/>
           <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/selleradditems'>Add Items in Shop</Link></li><hr/>
           <li className='mx-4 my-4 mb-2 hover:text-gray-200'><Link to='/' state={{isAuth:props.isAuth}}>My Account</Link></li><hr/>

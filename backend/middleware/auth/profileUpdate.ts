@@ -1,5 +1,5 @@
 import { Request,Response} from "express";
-import user from "../../models/UsersModel/UserReg";
+import user from "../../db/entities/appUser";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import jwt from "jsonwebtoken";

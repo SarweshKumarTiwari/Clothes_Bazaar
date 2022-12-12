@@ -1,5 +1,5 @@
 import { Response,Request } from "express";
-import Cart from "../../models/UsersModel/UserCart";
+import Cart from "../../db/entities/UsersModel/UserCart";
 
 class CartOps{
     async insertItem(req:Request,res:Response){

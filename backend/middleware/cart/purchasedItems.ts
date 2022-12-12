@@ -1,5 +1,5 @@
 import { Response,Request } from "express";
-import Purchase from "../../models/UsersModel/UsersPurchase";
+import Purchase from "../../db/entities/UsersModel/UsersPurchase";
 
 function ArrangeItems(data:{data:any[],id:string}) {
     if(data.data.length<=0||!data.id){

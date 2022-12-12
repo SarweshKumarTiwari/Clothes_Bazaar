@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import parser from 'body-parser';
-import AuthRegister from "../middleware/auth/auth.register";
-import authLogin from "../middleware/auth/auth.login";
+import AuthRegister from "../middleware/auth.register";
+import authLogin from "../middleware/auth.login";
 import profileUpdate from "../middleware/auth/profileUpdate";
 
 const routes: Router = express.Router();
@@ -11,7 +11,7 @@ routes.post("/register", AuthRegister.verifyUsersParam,
     AuthRegister.UserAlreadyExist,
     AuthRegister.RegisterUser);
 
-routes.post("/login",authLogin.loginUser);
+routes.post("/login/user",authLogin.checkUserType,authLogin.loginUser);
 routes.get("/authorise",authLogin.authoriseUser,authLogin.show);
 routes.put("/update",authLogin.authoriseUser,profileUpdate.updateUser);
 routes.put("/updatepassword",authLogin.authoriseUser,profileUpdate.updatePassword);

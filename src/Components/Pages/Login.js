@@ -22,7 +22,7 @@ export default function Login() {
       document.getElementById("p").innerText = "";
     }
     if (email && password) {
-      authenticate("http://localhost:4000/login",
+      authenticate("http://localhost:4000/login/user",
         { email: email, password: password }
       ).then(x => {
         if (x.error) {

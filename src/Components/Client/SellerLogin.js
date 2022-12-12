@@ -23,7 +23,7 @@ export default function SellerLogin() {
         </div>)
         return;
         }
-        authenticate("http://localhost:4000/loginseller",
+        authenticate("http://localhost:4000/login/seller",
         {email:email,password:password},
         "SellerToken").then(e=>{
 			if (e.error) {

@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import parser from 'body-parser';
-import authLogin from "../middleware/auth/auth.login";
+import authLogin from "../middleware/auth.login";
 import cartItems from "../middleware/cart/cartItems";
 import purchasedItems from "../middleware/cart/purchasedItems";
 
